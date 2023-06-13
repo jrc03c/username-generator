@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+
+      body {
+        font-family: monospace;
+        font-size: 2em;
+        margin: 0;
+        padding: 3em;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+      }
+
+      button {
+        font-family: monospace;
+        font-size: 1em;
+        padding: 0.5em;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          font-size: 1.25em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p id="output">...</p>
+    <button id="generate-button">Generate</button>
+    <script src="node_modules/@jrc03c/js-text-tools/dist/js-text-tools.js"></script>
+    <script>
+      const { camelify } = JSTextTools
+
+      Array.prototype.random = function () {
+        return this[Math.floor(Math.random() * this.length)]
+      }
+
+      function capitalize(x) {
+        x = x.toString()
+        return x[0].toUpperCase() + x.slice(1)
+      }
+
+      const files = [
+        "adjectives.json",
+        "adverbs.json",
+        "conjunctions.json",
+        "interjections.json",
+        "nouns.json",
+        "participles.json",
+        "prepositions.json",
+        "pronouns.json",
+        "verbs.json",
+      ]
+
+      window.addEventListener("load", async () => {
+        const words = {}
+
+        for (const file of files) {
+          const response = await fetch("words/" + file)
+          words[file.split(".")[0]] = await response.json()
+        }
+
+        const outputContainer = document.querySelector("#output")
+        const generateButton = document.querySelector("#generate-button")
+
+        const generate = () => {
+          const { adjectives, nouns } = words
+          const adjective = camelify(adjectives.random())
+          const noun = camelify(nouns.random())
+
+          const number = Math.random()
+            .toFixed(1 + Math.floor(Math.random() * 4))
+            .split(".")[1]
+
+          const username = capitalize(adjective) + capitalize(noun) + number
+          outputContainer.innerHTML = username
+        }
+
+        generateButton.addEventListener("click", generate)
+        generate()
+      })
+    </script>
+  </body>
+</html>
