@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@jrc03c/fs-extras": "^0.0.9",
+    "@jrc03c/js-csv-helpers": "^0.0.18",
+    "@jrc03c/js-math-tools": "^0.0.47",
+    "@jrc03c/js-text-tools": "^0.0.11",
+    "@jrc03c/progress": "^0.0.2"
+  }
+}
