@@ -79,7 +79,7 @@
         const words = {}
 
         for (const file of files) {
-          const response = await fetch("words/" + file)
+          const response = await fetch("./words/" + file)
           words[file.split(".")[0]] = await response.json()
         }
 
