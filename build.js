@@ -11,20 +11,16 @@ function rebuild() {
 
   try {
     execSync(
-      `npx esbuild res/js/lib/index.js --bundle --outfile=dist/generate-username.js --minify`,
-      { encoding: "utf8" }
-    )
-
-    execSync(
       `npx esbuild res/js/src/main.js --bundle --outfile=res/js/bundle.js`,
       { encoding: "utf8" }
     )
 
     const template = fs.readFileSync("template.html", "utf8")
 
-    const built = template
-      .replaceAll(/res\//g, path.join(basePath, "res") + "/")
-      .replaceAll(/\/dist\//g, path.join(basePath, "dist") + "/")
+    const built = template.replaceAll(
+      /res\//g,
+      path.join(basePath, "res") + "/"
+    )
 
     const outfile = path.join(__dirname, "index.html")
     fs.writeFileSync(outfile, built, "utf8")
@@ -52,7 +48,7 @@ const basePath = (() => {
 if (process.argv.indexOf("-w") > -1 || process.argv.indexOf("--watch") > -1) {
   watch({
     target: ".",
-    exclude: ["build.js", "bundle.js", "dist", "index.html", "node_modules"],
+    exclude: ["build.js", "bundle.js", "index.html", "node_modules"],
     created: rebuild,
     modified: rebuild,
     deleted: rebuild,

@@ -23,10 +23,4 @@ function generateUsername() {
   return capitalize(adjective) + capitalize(noun) + number
 }
 
-if (typeof module !== "undefined") {
-  module.exports = generateUsername
-}
-
-if (typeof window !== "undefined") {
-  window.generateUsername = generateUsername
-}
+module.exports = generateUsername

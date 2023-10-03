@@ -1,5 +1,6 @@
 const { createApp } = require("vue")
 const createVueComponentWithCSS = require("@jrc03c/vue-component-with-css")
+const generateUsername = require("./generate-username")
 
 const css = /* css */ ``
 
